@@ -8,7 +8,7 @@ session_start();
 //     header('Location: login.php');
 //     exit;}
 
-$sql = "SELECT * FROM estoque";
+$sql = "SELECT * FROM estoque ORDER BY quantidade desc";
 $stmt = $conn->query($sql);
 
 $estoque = $stmt->fetch_all(MYSQLI_ASSOC);

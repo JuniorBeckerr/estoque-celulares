@@ -8,7 +8,7 @@ session_start();
 //     header('Location: login.php');
 //     exit;
 // }
-$sql = "SELECT * FROM Saidas";
+$sql = "SELECT * FROM Saidas ORDER BY DATA_SAIDA desc";
 $stmt = $conn->query($sql);
 $saidas = $stmt->fetch_All(MYSQLI_ASSOC);
 

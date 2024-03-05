@@ -5,14 +5,10 @@ include_once('config/connection.php');
 
 session_start();
 
-// if (!isset($_SESSION['nome_usuario'])) {
-//     header('Location: login.php');
-//     exit;
-// }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $marca = $_POST['marca'];
-    $modelo = $_POST['modelo'];
+    $marca = $_POST['estado'];
+    $modelo = $_POST['marca-modelo'];
     $quantidade = $_POST['quantidade'];
     $responsavel = $_POST['responsavel'];
     $observacao = $_POST['observacao'];
@@ -30,6 +26,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $stmtAtualizaEstoque = $conn->prepare($atualizaEstoqueQuery);
         $stmtAtualizaEstoque->bind_param("iss", $quantidade, $marca, $modelo);
+        $stmtAtualizaEstoque->execute();
+        
 
         echo "Saida registrada com sucesso.";
     } else {
@@ -47,7 +45,7 @@ $estoques = $stmt->fetch_All(MYSQLI_ASSOC);
 ?>
 
 <section class="container">
-    <h1>Registro de Saida</h1>
+    <h1>Registro de Saída</h1>
     <form action="outputregister.php" method="post">
         <table>
             <thead>
@@ -57,62 +55,61 @@ $estoques = $stmt->fetch_All(MYSQLI_ASSOC);
                     <th>QUANTIDADE</th>
                     <th>RESPONSAVEL</th>
                     <th>OBSERVAÇÃO</th>
-                    <th>SAIDA</th>
+                    <th>SAÍDA</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>
                         <select id="marcaSelect" name="marca">
-                            <?php foreach ($estoques as $item) : ?>
-                                <option data-marca="<?= $item['marca'] ?>" data-estado="<?= $item['estado'] ?>">
-                                    <?= $item['marca'] . ' - ' . $item['estado']; ?>
-                                </option>
-                            <?php endforeach; ?>
+                            <?php
+                            $marcasUnicas = [];
+                            foreach ($estoques as $item) {
+                                $marcasUnicas[$item['marca']] = true;
+                            }
+
+                            foreach ($marcasUnicas as $marca => $value) {
+                                echo "<option value='$marca'>$marca</option>";
+                            }
+                            ?>
                         </select>
                     </td>
                     <td>
                         <select id="modeloSelect" name="modelo">
-                            <?php
-                            $modelosUnicos = array();
-
-                            foreach ($estoques as $item) {
-                                $marca = $item['marca'];
-                                $modelo = $item['modelo'];
-                                $estado = $item['estado'];
-
-                                if (!isset($modelosUnicos[$marca][$modelo])) {
-                                    echo "<option>";
-                                    echo $marca . ' - ' . $modelo;
-                                    echo "</option>";
-
-                                    $modelosUnicos[$marca][$modelo] = true;
-                                }
-                            }
-                            ?>
+                        </select>
                     </td>
-                    <td><input type="number" name="quantidade"></td>
-                    <td><input type="text" name="responsavel"></td>
+                    <td><input type="number" name="quantidade" required></td>
+                    <td><input type="text" name="responsavel" required></td>
                     <td><input type="text" name="observacao"></td>
                     <td><input class="date-input" required type="date" name="data_saida" value="<?= date("Y-m-d"); ?>"> </td>
-
                 </tr>
             </tbody>
         </table>
-        <button class="register-input">Registrar Saida</button>
+        <button class="register-input">Registrar Saída</button>
     </form>
 </section>
 
 <script>
+    var estoques = <?php echo json_encode($estoques); ?>;
+
     document.getElementById("marcaSelect").addEventListener("change", function() {
-        var selectedOption = this.options[this.selectedIndex];
-        var marca = selectedOption.getAttribute("data-marca");
-        var estado = selectedOption.getAttribute("data-estado");
+        var marcaSelecionada = this.value;
+        var modelos = estoques.filter(function(estoque) {
+            return estoque.marca === marcaSelecionada;
+        });
 
-        console.log("Marca:", marca);
-        console.log("Estado:", estado);
+        var modeloSelect = document.getElementById("modeloSelect");
+        modeloSelect.innerHTML = ''; 
 
+        modelos.forEach(function(modelo) {
+            var option = document.createElement("option");
+            option.value = modelo.modelo;
+            option.text = modelo.modelo + ' - ' + modelo.estado;
+            modeloSelect.appendChild(option);
+        });
     });
+
+    document.getElementById("marcaSelect").dispatchEvent(new Event('change'));
 </script>
 
 <?php

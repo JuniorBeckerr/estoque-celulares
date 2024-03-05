@@ -9,7 +9,7 @@ session_start();
 //     exit;
 // }
 
-$sql = "SELECT * FROM Entradas";
+$sql = "SELECT * FROM Entradas ORDER BY DATA_ENTRADA desc";
 $result = $conn->query($sql);
 $entrada = $result->fetch_all(MYSQLI_ASSOC);
 ?>

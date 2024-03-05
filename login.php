@@ -1,5 +1,7 @@
-<!-- <?php
+<?php
 include_once("./config/connection.php");
+include_once("./config/url.php");
+
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -21,33 +23,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="<?= $BASE_URL ?>css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="<?=$BASE_URL?>css/style-login.css">
+        <title>Document</title>
+    </head>
+    <div class="container-img">
+        <img src="https://lirp.cdn-website.com/d8dad59b/dms3rep/multi/opt/logo-mabu-dfd0999c-640w.png">
+        </div>
+    <body>
+    <form action="login.php" method="post" class='container-login'>    
+        <h2>Login</h2>
 
-</head>
+        <label for="nome_usuario">Nome de Usuário:
+            <input type="text" name="nome_usuario" required>
+        </label>
 
-<body>
-    <h2>Login</h2>
-    <form action="login.php" method="post">
-        <label for="nome_usuario">Nome de Usuário:</label>
-        <input type="text" name="nome_usuario" required><br>
-
-        <label for="senha">Senha:</label>
-        <input type="password" name="senha" required><br>
+        <label for="senha">Senha:
+            <input type="password" name="senha" required>
+        </label>
 
         <button type="submit">Entrar</button>
     </form>
-
-
     <?php
     include_once "./templates/footer.php";
-    ?> -->
+    ?>
+

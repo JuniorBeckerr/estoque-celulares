@@ -69,11 +69,11 @@ table{
     width: 80%;
     min-width: 750px;
     max-width: 1200px;
-    height: 100%;
     background-color: rgb(65, 60, 60);
     color: #FFF;
     font-family: 'Roboto';
     border-collapse: collapse;
+    margin-bottom: 50px;
 }
 
 
@@ -101,8 +101,8 @@ tbody>tr>td{
 .register-input{
     cursor: pointer;
     text-decoration: none;
-    bottom: 5%;
-    left: 3%;
+    top: 3%;
+    right: 3%;
     font-size: 1.3rem;
     font-family: 'Roboto';
     padding: 1% 2%;

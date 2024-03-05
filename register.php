@@ -82,10 +82,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <td><select name="modelo" id="selectOpcao" required>
                             <option data-default disabled selected></option>
                             <option>A346</option>
+                            <option>IPHONE 12</option>
+                            <option>IPHONE 13</option>
+                            <option>IPHONE 14</option>
+                            <option>IPHONE 15</option>
+                            <option>K9</option>
+                            <option>MOTO E1</option>
+                            <option>MOTO E40</option>
                             <option>MOTO G10</option>
-                            <option>IPHONE</option>
+                            <option>MOTO ONE</option>
+                            <option>S21 Plus</option>
                             <option>S21</option>
-                            <option>k9</option>
+                            <option>S23</option>
+                            <option>S23 Ultra</option>
+
                     </td>
                     <td><input type="number" name="quantidade" required></td>
                     <td><select name="empresa" required>
